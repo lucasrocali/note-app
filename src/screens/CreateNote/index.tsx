@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components/native';
-import { RootStackParamList, Styled } from '../../utils/types'
+import { RootStackParamList, Styled } from '../../utils/types';
 import { useStore } from '../../store';
 
 type CreateNoteScreenNavigationProp = StackNavigationProp<
@@ -35,6 +35,7 @@ const HeaderText = styled.Text`
 
 const TextInput = styled.TextInput`
     flex: 1;
+    color: ${(props: Styled) => props.theme.color.lblPrimary};
     margin-vertical: ${(props: Styled) => props.theme.spacing.small};
 	margin-horizontal: ${(props: Styled) => props.theme.spacing.small};
 `;

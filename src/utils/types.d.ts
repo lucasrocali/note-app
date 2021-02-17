@@ -9,6 +9,7 @@ export type Theme = {
         primary: string;
         bgPrimary: string;
         lblPrimary: string;
+        lblSecondary: string;
         lightGray: string;
     };
     spacing: {

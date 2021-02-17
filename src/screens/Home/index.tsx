@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
-import { RootStackParamList, Styled } from '../../utils/types';
+import { RootStackParamList, Note, Styled } from '../../utils/types';
 import { useStore } from '../../store';
+import NoteCell from '../../components/NoteCell';
 
 type HomeScreenNavigationProp = StackNavigationProp<
 	RootStackParamList,
@@ -29,6 +30,7 @@ const Header = styled.View`
 
 const SearchInput = styled.TextInput`
 	flex: 1;
+    color: ${(props: Styled) => props.theme.color.lblPrimary};
 `;
 
 const AddIconContent = styled.TouchableOpacity`
@@ -51,9 +53,16 @@ export default function Home(props: HomeProps) {
 	const { navigation } = props;
 	const [searchingText, setSearchingText] = useState<string>('')
 	const { notes } = useStore()
+
+	const renderItem = ({ item }: { item: Note }) => (
+		<NoteCell
+			note={item}
+		/>
+	);
+
 	return (
 		<Container>
-			<FlatList
+			<FlatList<React.ElementType>
 				data={notes}
 				ListHeaderComponent={(
 					<Header>
@@ -70,9 +79,7 @@ export default function Home(props: HomeProps) {
 						</AddIconContent>
 					</Header>
 				)}
-				renderItem={({ item: note, index }) => (
-					<Text>Note</Text>
-				)}
+				renderItem={renderItem}
 			/>
 		</Container>
 	);

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, Styled } from '../../utils/types'
 import styled from 'styled-components/native';
-import { Ionicons } from '@expo/vector-icons';
+import { RootStackParamList, Styled } from '../../utils/types'
+import { useStore } from '../../store';
 
 type CreateNoteScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -42,23 +42,32 @@ const TextInput = styled.TextInput`
 export default function CreateNote(props: CreateNoteProps) {
 
     const [text, setText] = useState<string>('')
-
     const { navigation } = props
+    const { addNote } = useStore()
 
-    React.useLayoutEffect(() => {
+    const onBack = () => {
+        navigation.goBack()
+    }
+
+    const onAddNote = () => {
+        addNote(text)
+        navigation.goBack()
+    }
+
+    useLayoutEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
-                <Header onPress={() => navigation.goBack()}>
+                <Header onPress={onBack}>
                     <HeaderText>{'Back'}</HeaderText>
                 </Header>
             ),
             headerRight: () => (
-                <Header onPress={() => console.log('Done')}>
+                <Header onPress={onAddNote}>
                     <HeaderText>{'Done'}</HeaderText>
                 </Header>
             ),
         });
-    }, [navigation]);
+    }, [navigation, text]);
 
 
     return (
@@ -68,7 +77,7 @@ export default function CreateNote(props: CreateNoteProps) {
                 onChangeText={(text) => setText(text)}
                 value={text}
                 placeholder={'Write here...'}
-                autoCapitalize="none"
+                autoCapitalize='none'
             />
         </Container>
     );

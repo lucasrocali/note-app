@@ -4,7 +4,7 @@ export type RootStackParamList = {
 }
 
 
-export interface Theme {
+export type Theme = {
     color: {
         primary: string;
         bgPrimary: string;
@@ -18,6 +18,17 @@ export interface Theme {
 
     };
 }
-export interface Styled {
+export type Styled = {
     theme: Theme;
+}
+
+export type Note = {
+    id: string;
+    text: string;
+    created_at: Date;
+}
+
+export type State = {
+    notes: Note[]
+    addNote: (text: string) => void
 }

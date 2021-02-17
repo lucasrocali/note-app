@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, Styled } from '../../utils/types'
 import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
+import { RootStackParamList, Styled } from '../../utils/types';
+import { useStore } from '../../store';
 
 type HomeScreenNavigationProp = StackNavigationProp<
 	RootStackParamList,
@@ -49,17 +50,18 @@ const FlatList = styled.FlatList``
 export default function Home(props: HomeProps) {
 	const { navigation } = props;
 	const [searchingText, setSearchingText] = useState<string>('')
+	const { notes } = useStore()
 	return (
 		<Container>
 			<FlatList
-				data={[1, 2]}
+				data={notes}
 				ListHeaderComponent={(
 					<Header>
 						<SearchInput
 							onChangeText={(text) => setSearchingText(text)}
 							value={searchingText}
 							placeholder={'Search'}
-							autoCapitalize="none"
+							autoCapitalize='none'
 						/>
 						<AddIconContent
 							onPress={() => navigation.navigate('CreateNote')}

@@ -55,6 +55,11 @@ export default function Home(props: HomeProps) {
 	const notes: Note[] = useStore(state => Object.values(state.notes))
 	const sortedNotes: Note[] = notes.sort((a, b) => b.updated_at.getTime() - a.updated_at.getTime())
 
+	let filteredNotes = sortedNotes
+	if (searchingText) {
+		filteredNotes = sortedNotes.filter(note => note.text.toLowerCase().includes(searchingText.toLowerCase()))
+	}
+
 	const renderItem = ({ item: note }: { item: Note }) => (
 		<NoteCell
 			note={note}
@@ -65,7 +70,7 @@ export default function Home(props: HomeProps) {
 	return (
 		<Container>
 			<FlatList<React.ElementType>
-				data={sortedNotes}
+				data={filteredNotes}
 				ListHeaderComponent={(
 					<Header>
 						<SearchInput

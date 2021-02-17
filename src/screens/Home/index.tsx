@@ -53,7 +53,7 @@ export default function Home(props: HomeProps) {
 	const { navigation } = props;
 	const [searchingText, setSearchingText] = useState<string>('')
 	const notes: Note[] = useStore(state => Object.values(state.notes))
-	const sortedNotes: Note[] = notes.sort((a, b) => b.created_at.getTime() - a.created_at.getTime())
+	const sortedNotes: Note[] = notes.sort((a, b) => b.updated_at.getTime() - a.updated_at.getTime())
 
 	const renderItem = ({ item: note }: { item: Note }) => (
 		<NoteCell

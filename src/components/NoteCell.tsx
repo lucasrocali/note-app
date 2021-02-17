@@ -18,6 +18,7 @@ const Container = styled.TouchableOpacity`
 
 const Text = styled.Text`
     color: ${(props: Styled) => props.theme.color.lblPrimary};
+    padding-bottom: ${(props: Styled) => props.theme.spacing.small};
 `
 
 const Date = styled.Text`
@@ -29,7 +30,7 @@ export default function NoteCell(props: NoteCellProps) {
     return (
         <Container activeOpacity={0.8} onPress={() => onPress && onPress()}>
             <Text numberOfLines={3}>{note.text}</Text>
-            <Date>{format(note.created_at, 'yyyy-MM-dd HH:mm:ss')}</Date>
+            <Date>{format(note.updated_at, 'yyyy-MM-dd HH:mm:ss')}</Date>
         </Container >
     );
 }

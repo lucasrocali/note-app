@@ -52,18 +52,20 @@ const FlatList = styled.FlatList``
 export default function Home(props: HomeProps) {
 	const { navigation } = props;
 	const [searchingText, setSearchingText] = useState<string>('')
-	const { notes } = useStore()
+	const notes: Note[] = useStore(state => Object.values(state.notes))
+	const sortedNotes: Note[] = notes.sort((a, b) => b.created_at.getTime() - a.created_at.getTime())
 
-	const renderItem = ({ item }: { item: Note }) => (
+	const renderItem = ({ item: note }: { item: Note }) => (
 		<NoteCell
-			note={item}
+			note={note}
+			onPress={() => navigation.navigate('CreateNote', { note_id: note.id })}
 		/>
 	);
 
 	return (
 		<Container>
 			<FlatList<React.ElementType>
-				data={notes}
+				data={sortedNotes}
 				ListHeaderComponent={(
 					<Header>
 						<SearchInput
@@ -73,7 +75,7 @@ export default function Home(props: HomeProps) {
 							autoCapitalize='none'
 						/>
 						<AddIconContent
-							onPress={() => navigation.navigate('CreateNote')}
+							onPress={() => navigation.navigate('CreateNote', { note_id: undefined })}
 						>
 							<AddIcon name='add' />
 						</AddIconContent>

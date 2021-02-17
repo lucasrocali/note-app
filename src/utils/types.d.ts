@@ -1,6 +1,8 @@
 export type RootStackParamList = {
     Home: undefined;
-    CreateNote: undefined;
+    CreateNote: {
+        note_id?: string
+    };
 }
 
 
@@ -27,9 +29,14 @@ export type Note = {
     id: string;
     text: string;
     created_at: Date;
+    updated_at: Date;
 }
 
 export type State = {
-    notes: Note[]
-    addNote: (text: string) => void
+    notes: {
+        [key: string]: Note;
+    }
+    addNote: (text: string) => void;
+    editNote: (id: string, text: string) => void;
+
 }

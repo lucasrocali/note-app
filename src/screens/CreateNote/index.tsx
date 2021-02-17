@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components/native';
-import { RootStackParamList, Styled } from '../../utils/types';
+import { RootStackParamList, Note, Styled } from '../../utils/types';
 import { useStore } from '../../store';
 
 type CreateNoteScreenNavigationProp = StackNavigationProp<
@@ -42,16 +42,26 @@ const TextInput = styled.TextInput`
 
 export default function CreateNote(props: CreateNoteProps) {
 
-    const [text, setText] = useState<string>('')
-    const { navigation } = props
-    const { addNote } = useStore()
+    const { route, navigation } = props
+    const note_id = route.params.note_id;
+
+    const { addNote, editNote } = useStore()
+    let editing_note: Note | undefined = undefined
+    if (note_id) {
+        editing_note = useStore(state => state.notes[note_id])
+    }
+    const [text, setText] = useState<string>(editing_note && editing_note.text || '')
 
     const onBack = () => {
         navigation.goBack()
     }
 
-    const onAddNote = () => {
-        addNote(text)
+    const onDone = () => {
+        if (editing_note) {
+            editNote(editing_note.id, text)
+        } else {
+            addNote(text)
+        }
         navigation.goBack()
     }
 
@@ -63,7 +73,7 @@ export default function CreateNote(props: CreateNoteProps) {
                 </Header>
             ),
             headerRight: () => (
-                <Header onPress={onAddNote}>
+                <Header onPress={onDone}>
                     <HeaderText>{'Done'}</HeaderText>
                 </Header>
             ),

@@ -1,0 +1,19 @@
+{
+  "editor.tabSize": 4,
+  "editor.formatOnSave": true,
+  "flow.useNPMPackagedFlow": true,
+  "javascript.validate.enable": false,
+  "javascript.format.enable": false,
+  "vsicons.projectDetection.autoReload": true,
+  "editor.renderWhitespace": "boundary",
+  "files.exclude": {
+    ".*": false,
+    "ios/": false,
+    "*.lo*": false,
+    "*.json": false,
+    "LICENSE": false,
+    "android/": false,
+    "__tests__": false,
+    "node_modules/": false
+  }
+}

@@ -20,7 +20,9 @@ A small React Native proof of concept built with Expo
 ### Running 
 
 `$ yarn ios`
+
 `$ yarn android`
+
 `$ yarn web`
 
 ## Built With
